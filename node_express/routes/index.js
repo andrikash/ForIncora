@@ -25,8 +25,8 @@ const hashPass = (password) => {
 router.post('/login',async (req,res) => {
     let user;
     try {
-        user = await UserDB.findOne({email: req.body.email});
-
+        user = await UserDB.findOne({ where: {email: req.body.email}});
+        console.log(user);
         const isOk = await UserDB.comparePass(req.body.password);
 
         if (!isOk) {
@@ -62,7 +62,7 @@ router.post('/users', async (req, res) => {
     const hashed = await hashPass(userTemp.password);
     userTemp.password = hashed;
     console.log(userTemp.dataValues);
-    UserDB.create(userTemp).then(function () {
+    UserDB.create(userTemp.dataValues).then(function () {
         res.send('Check changes');
     }).catch(function (err) {
         res.status(400).send(err.name);
