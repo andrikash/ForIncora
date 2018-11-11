@@ -45,20 +45,11 @@ const User = sequelize.define('user', {
 });
 User.sync({force: true}).then(() => {
 });
-//     User.findAll().then(function (users) {
-//         users.forEach(function (user) {
-//             console.log(user.firstName);
-//         });
-//     });
-    // User.findAll()
-    //     .then(function (users) {
-    //    let user =  users.find(function(user) {
-    //         return +user.id === 2;
-    //     });
-    //     console.log(user.firstName);
-    // });
 
-User.comparePass = function (password){
+User.comparePass =  function(password)  {
+    console.log('BCRYPT WORKING!');
+    console.log(bcrypt.compareSync(password,'2927456'));
+    console.log('BCRYPT WORKING!');
     return bcrypt.compareSync(password,this.password)
 };
 module.exports.User = User;
